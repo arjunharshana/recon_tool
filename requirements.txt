@@ -1,0 +1,13 @@
+# HTTP & Networking
+requests==2.32.3
+urllib3==2.2.3
+
+# HTML Parsing
+beautifulsoup4==4.12.3
+lxml==5.3.0
+
+# Environment
+python-dotenv==1.0.1
+
+# Terminal UI
+colorama==0.4.6
