@@ -10,15 +10,33 @@ A Python-based passive reconnaissance tool designed to automate the initial phas
 - **Robots.txt Parser**: Scans for disallowed paths that might reveal sensitive directories.
 - **Reporting**: Generates clean, actionable terminal output and saved reports. -->
 
-### Prerequisites
+## Prerequisites
 
 - Python 3.9+
 - VS Code
 
-### Installation
+## Installation
 
-1. **Clone the repository:**
+1. ### **Clone the repository:**
    ```bash
    git clone https://github.com/arjunharshana/recon_tool.git
    cd recon_tool
+   ```
+2. ### **Environment Configuration**
+   Open your terminal in the `recon_tool` folder and run:
+
+   ```bash
+   # Create the virtual env
+   python -m venv venv
+   
+   # Activate the environment (use gitbash in terminal)
+   source venv/Scripts/activate
+   
+   # Update pip
+   python -m pip install --upgrade pip
+   ```
+
+3. ### **Install Dependencies**
+   ```bash
+   pip install -r requirements.txt
    ```
