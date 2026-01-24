@@ -1,6 +1,6 @@
 import argparse
 import sys
-from coloroma import Fore, Style, init
+from colorama import Fore, Style, init
 
 
 init(autoreset=True)
