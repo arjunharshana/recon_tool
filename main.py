@@ -2,9 +2,11 @@ import argparse
 import sys
 
 from colorama import Fore, init
+
 from modules.crawler import crawl_target
 from modules.headers import check_headers
 from modules.robots_parser import parse_robots
+from modules.tech_detect import detect_tech_stack
 
 init(autoreset=True)
 
@@ -46,7 +48,9 @@ def main():
     parse_robots(target_url)
     print("-" * 50)
     crawl_target(target_url)
-
+    print("-" * 50)
+    detect_tech_stack(target_url)
+    print("-" * 50)
     print(Fore.YELLOW + f"[+] Reconnaissance completed on: {target_url}")
 
 
