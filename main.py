@@ -1,8 +1,10 @@
 import argparse
 import sys
-from colorama import Fore, init
-from modules.headers import check_headers
 
+from colorama import Fore, init
+
+from modules.headers import check_headers
+from modules.robots_parser import parse_robots
 
 init(autoreset=True)
 
@@ -40,6 +42,8 @@ def main():
 
     # now here will come the module calls for web recon
     check_headers(target_url)
+    print("-" * 50)
+    parse_robots(target_url)
 
     print(Fore.YELLOW + f"[+] Reconnaissance completed on: {target_url}")
 
