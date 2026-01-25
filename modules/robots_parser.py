@@ -1,6 +1,7 @@
 from urllib.robotparser import RobotFileParser
 
 import requests
+from bs4 import BeautifulSoup
 from colorama import Fore
 
 
@@ -16,16 +17,9 @@ def parse_robots(url):
     try:
         # fetch the robots.txt file
         response = requests.get(robots_url, timeout=10)
+        content_type = response.headers.get("Content-Type", "").lower()
 
-        # check if robots.txt exists
-        if "html" in response.headers.get("Content-Type", "").lower():
-            print(
-                Fore.YELLOW
-                + "[!] Warning: Server returned HTML instead of a plain text robots.txt"
-            )
-            return []
-
-        if response.status_code == 200:
+        if response.status_code == 200 and "text/plain" in content_type:
             print(Fore.GREEN + "[+] robots.txt found!")
             print(Fore.YELLOW + "\n[robots.txt content]:\n")
             print(Fore.WHITE + response.text)
@@ -57,10 +51,33 @@ def parse_robots(url):
                 print(Fore.YELLOW + "[*] No disallowed paths found in robots.txt.")
 
             return disallowed_paths
+        elif "text/html" in content_type:
+            print(
+                Fore.RED
+                + "[-] robots.txt appears to be HTML content, possible misconfiguration."
+            )
+            soup = BeautifulSoup(response.text, "html.parser")
+            leaked_paths = set()
+
+            tags = soup.find_all(["a", "link", "script", "img"])
+
+            for tag in tags:
+                path = tag.get("href") or tag.get("src")
+                if path and path.startswith("/"):
+                    leaked_paths.add(path)
+
+            unique_leaked_paths = sorted(list(leaked_paths))
+            if unique_leaked_paths:
+                for path in unique_leaked_paths:
+                    print(Fore.WHITE + f"    > Leaked Path: {path}")
+            else:
+                print(Fore.YELLOW + "[*] No leaked paths found in HTML content.")
+
+            return unique_leaked_paths
 
         else:
             print(
-                Fore.RED + "[-] robots.txt not found (HTTP Status Code: "
+                Fore.RED + "[-] Source not found (HTTP Status Code: "
                 f"{response.status_code})"
             )
 
