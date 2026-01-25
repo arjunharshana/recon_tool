@@ -2,7 +2,7 @@ import argparse
 import sys
 
 from colorama import Fore, init
-
+from modules.crawler import crawl_target
 from modules.headers import check_headers
 from modules.robots_parser import parse_robots
 
@@ -44,6 +44,8 @@ def main():
     check_headers(target_url)
     print("-" * 50)
     parse_robots(target_url)
+    print("-" * 50)
+    crawl_target(target_url)
 
     print(Fore.YELLOW + f"[+] Reconnaissance completed on: {target_url}")
 

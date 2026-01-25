@@ -1,5 +1,4 @@
 from urllib.robotparser import RobotFileParser
-
 import requests
 from bs4 import BeautifulSoup
 from colorama import Fore
