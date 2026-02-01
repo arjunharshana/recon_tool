@@ -1,4 +1,5 @@
 from urllib.robotparser import RobotFileParser
+
 import requests
 from bs4 import BeautifulSoup
 from colorama import Fore
@@ -33,7 +34,7 @@ def parse_robots(url):
             disallowed_paths = []
 
             if rp.default_entry:
-                for rule in rp.default_entry.rulelines():
+                for rule in rp.default_entry.rulelines:
                     if not rule.allowance:
                         path = rule.path
                         disallowed_paths.append(path)
